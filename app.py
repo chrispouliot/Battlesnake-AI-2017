@@ -1,4 +1,5 @@
 import logging
+import os
 from flask import Flask, json, request
 app = Flask(__name__)
 
@@ -28,4 +29,5 @@ def handle_move():
 
 
 if __name__ == '__main__':
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
