@@ -10,12 +10,21 @@ def handle_index():
 
 @app.route('/start', methods=["POST"])
 def handle_start():
-    return json.dumps({"what": "hey"})
+    response_dict = {
+        'color': '#ffb6c1',
+        'name': 'pinky-snek',
+        'head_type': 'safe',
+        'tail_type': 'round-bum',
+    }
+    return json.dumps(response_dict)
 
 
 @app.route('/move', methods=["POST"])
 def handle_move():
-    pass
+    response_dict = {
+        'move': 'left',
+    }
+    return json.dumps(response_dict)
 
 
 if __name__ == '__main__':
