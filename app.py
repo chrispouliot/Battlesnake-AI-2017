@@ -17,6 +17,7 @@ def handle_start():
         'head_type': 'safe',
         'head_url': 'https://s3.amazonaws.com/john-box-o-mysteries/pacman+ghosts/pinky.png',
         'tail_type': 'round-bum',
+        'taunt': 'wakawakawakawaka',
     }
     return json.dumps(response_dict)
 
