@@ -54,7 +54,7 @@ def get_direction_from_coord(coord, curr_position):
 
 
 def get_next_move(snake, empty_coords, food_coords):
-    health = snake['health']
+    health = snake['health_points']
     curr_x, curr_y = snake['coords'][0]
     adjacent_coords = [
         [curr_x + 1, curr_y],
