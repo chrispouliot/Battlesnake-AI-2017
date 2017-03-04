@@ -1,6 +1,13 @@
 import logging
 import os
 from flask import Flask, json, request
+
+from helpers import get_dangerous_coords, \
+    get_empty_coords, \
+    get_flattened_list, \
+    get_next_move, \
+    get_snake_by_id
+
 app = Flask(__name__)
 
 
@@ -29,11 +36,24 @@ def handle_move():
     if not request_dict:
         return 400
 
-    response_dict = "Placeholder"
-    return json.dumps(response_dict)
+    # Raw board data from request
+    snake_id = request_dict['you']
+    width = request_dict['width']
+    length = request_dict['length']
+    food_coords = request_dict['food']
+    snakes = request_dict['snakes']
+
+    # Inferred board data
+    flattened_snake_coords = get_flattened_list([snake['coords'] for snake in snakes])
+    our_snake = get_snake_by_id(snakes, snake_id)
+    dangerous_coords = get_dangerous_coords(width, length, flattened_snake_coords)
+    empty_coords = get_empty_coords(width, length, dangerous_coords)
+    move = get_next_move(our_snake, empty_coords, food_coords)
+
+    return json.dumps({'move': move})
 
 
 if __name__ == '__main__':
-    logging.info("Starting server..")
+    # logging.info("Starting server..")
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
