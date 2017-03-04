@@ -1,3 +1,17 @@
+def get_adjacent_coords_for_coord(coord):
+    x, y = coord
+    return [
+        [x, y + 1],
+        [x, y - 1],
+        [x + 1, y],
+        [x - 1, y],
+    ]
+
+
+def get_all_board_coordinates(width, height):
+    return [[x, y] for x in range(width) for y in range(height)]
+
+
 def get_dangerous_coords(width, height, flattened_snake_coords):
     """Returns a list of all dangerous coordinates"""
     # All edges are dangerous
@@ -11,14 +25,29 @@ def get_dangerous_coords(width, height, flattened_snake_coords):
         danger_coords.append([-1, y])
         danger_coords.append([width, y])
 
+    # Add snake coords to list of danger
+    danger_coords += flattened_snake_coords
+
+    # Add empty spaces that are surrouned by dangerous coords to list of danger
+    empty_coords = get_all_board_coordinates(width, height)
+    for empty_coord in empty_coords:
+        adjacent_coords = get_adjacent_coords_for_coord(empty_coord)
+        num_dangerous = 0
+        for adjacent_coord in adjacent_coords:
+            if adjacent_coord in danger_coords:
+                num_dangerous += 1
+        # If empty space is surrounded by dangerous coords, it's dangerous
+        if num_dangerous >= 4:
+            danger_coords.append(empty_coord)
+
     # Return edges plus currently occupied snakes
-    return danger_coords + flattened_snake_coords
+    return danger_coords
 
 
 def get_empty_coords(width, height, dangerous_coords):
     """Returns a list of all empty coordinates in the game board"""
     # All possible board coordinates minus dangerous coords (ie walls and snakes)
-    all_board_coordinates = [[x, y] for x in range(width) for y in range(height)]
+    all_board_coordinates = get_all_board_coordinates(width, height)
     return [coord for coord in all_board_coordinates if coord not in dangerous_coords]
 
 
@@ -55,13 +84,8 @@ def get_direction_from_coord(coord, curr_position):
 
 def get_next_move(snake, empty_coords, food_coords):
     health = snake['health_points']
-    curr_x, curr_y = snake['coords'][0]
-    adjacent_coords = [
-        [curr_x + 1, curr_y],
-        [curr_x - 1, curr_y],
-        [curr_x, curr_y + 1],
-        [curr_x, curr_y - 1],
-    ]
+    curr_coord = snake['coords'][0]
+    adjacent_coords = get_adjacent_coords_for_coord(curr_coord)
     # Get all coords that are adjacent and empty
     possible_move_coords = [coord for coord in adjacent_coords if coord in empty_coords]
 
@@ -74,4 +98,4 @@ def get_next_move(snake, empty_coords, food_coords):
         import random
         next_coord = random.choice(possible_move_coords)
 
-    return get_direction_from_coord(next_coord, [curr_x, curr_y])
+    return get_direction_from_coord(next_coord, curr_coord)
