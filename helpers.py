@@ -70,6 +70,8 @@ def get_next_move(snake, empty_coords, food_coords):
     next_coord = None
     # For now just take the first one
     if possible_move_coords:
-        next_coord = possible_move_coords[0]
+        # PLACE HOLDER
+        import random
+        next_coord = random.choice(possible_move_coords)
 
     return get_direction_from_coord(next_coord, [curr_x, curr_y])
