@@ -39,15 +39,15 @@ def handle_move():
     # Raw board data from request
     snake_id = request_dict['you']
     width = request_dict['width']
-    length = request_dict['length']
+    height = request_dict['height']
     food_coords = request_dict['food']
     snakes = request_dict['snakes']
 
     # Inferred board data
     flattened_snake_coords = get_flattened_list([snake['coords'] for snake in snakes])
     our_snake = get_snake_by_id(snakes, snake_id)
-    dangerous_coords = get_dangerous_coords(width, length, flattened_snake_coords)
-    empty_coords = get_empty_coords(width, length, dangerous_coords)
+    dangerous_coords = get_dangerous_coords(width, height, flattened_snake_coords)
+    empty_coords = get_empty_coords(width, height, dangerous_coords)
     move = get_next_move(our_snake, empty_coords, food_coords)
 
     return json.dumps({'move': move})

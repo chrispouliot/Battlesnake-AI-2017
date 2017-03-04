@@ -1,12 +1,12 @@
-def get_dangerous_coords(width, length, flattened_snake_coords):
+def get_dangerous_coords(width, height, flattened_snake_coords):
     """Returns a list of all dangerous coordinates"""
     # All edges are dangerous
     danger_coords = []
     for x in range(width):
         # Top and bottom walls
         danger_coords.append([x, -1])
-        danger_coords.append([x, length])
-    for y in range(length):
+        danger_coords.append([x, height])
+    for y in range(height):
         # Left wall and right walls
         danger_coords.append([-1, y])
         danger_coords.append([width, y])
@@ -15,10 +15,10 @@ def get_dangerous_coords(width, length, flattened_snake_coords):
     return danger_coords + flattened_snake_coords
 
 
-def get_empty_coords(width, length, dangerous_coords):
+def get_empty_coords(width, height, dangerous_coords):
     """Returns a list of all empty coordinates in the game board"""
     # All possible board coordinates minus dangerous coords (ie walls and snakes)
-    all_board_coordinates = [[x, y] for x in range(width) for y in range(length)]
+    all_board_coordinates = [[x, y] for x in range(width) for y in range(height)]
     return [coord for coord in all_board_coordinates if coord not in dangerous_coords]
 
 
