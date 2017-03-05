@@ -48,9 +48,9 @@ def handle_move():
     our_snake = get_snake_by_id(snakes, snake_id)
     dangerous_coords = get_dangerous_coords(width, height, flattened_snake_coords)
     empty_coords = get_empty_coords(width, height, dangerous_coords)
-    move = get_next_move(our_snake, empty_coords, food_coords)
 
-    return json.dumps({'move': move})
+    # We're good
+    return json.dumps({'move': get_next_move(our_snake, empty_coords, food_coords)})
 
 
 if __name__ == '__main__':
