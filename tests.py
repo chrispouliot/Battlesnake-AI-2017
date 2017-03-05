@@ -14,6 +14,7 @@ class TestHelperFuncs(unittest.TestCase):
         width = 3
         height = 3
         snake_coords = []
+        max_danger_level = 3
         expected = [
             [0, -1],
             [1, -1],
@@ -30,7 +31,7 @@ class TestHelperFuncs(unittest.TestCase):
         ]
 
         # Act
-        dangerous_coords = get_dangerous_coords(width, height, snake_coords)
+        dangerous_coords = get_dangerous_coords(width, height, snake_coords, max_danger_level)
 
         # Assert
         self.assertEqual(sorted(expected), sorted(dangerous_coords))
@@ -39,6 +40,7 @@ class TestHelperFuncs(unittest.TestCase):
         # Arrange
         width = 3
         height = 3
+        max_danger_level = 3
         snake_coords = [[1, 1]]
         expected = [
             [0, -1],
@@ -57,7 +59,7 @@ class TestHelperFuncs(unittest.TestCase):
             [1, 1],
         ]
         # Act
-        dangerous_coords = get_dangerous_coords(width, height, snake_coords)
+        dangerous_coords = get_dangerous_coords(width, height, snake_coords, max_danger_level)
 
         # Assert
         self.assertEqual(sorted(expected), sorted(dangerous_coords))

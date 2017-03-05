@@ -12,7 +12,7 @@ def get_all_board_coords(width, height):
     return [[x, y] for x in range(width) for y in range(height)]
 
 
-def get_dangerous_coords(width, height, flattened_snake_coords):
+def get_dangerous_coords(width, height, flattened_snake_coords, max_danger_level):
     """Returns a list of all dangerous coordinates"""
     # All edges are dangerous
     danger_coords = []
@@ -37,7 +37,7 @@ def get_dangerous_coords(width, height, flattened_snake_coords):
             if adjacent_coord in danger_coords:
                 num_dangerous += 1
         # If empty space is surrounded by dangerous coords, it's dangerous
-        if num_dangerous >= 4:
+        if num_dangerous >= max_danger_level:
             danger_coords.append(empty_coord)
 
     # Return edges plus currently occupied snakes
@@ -82,19 +82,26 @@ def get_direction_from_coord(coord, curr_position):
     return move
 
 
-def get_next_move(snake, empty_coords, food_coords):
+def get_next_move(snake, empty_coords, food_coords, min_health_level):
     health = snake['health_points']
     curr_coord = snake['coords'][0]
     adjacent_coords = get_adjacent_coords_for_coord(curr_coord)
     # Get all coords that are adjacent and empty
     possible_move_coords = [coord for coord in adjacent_coords if coord in empty_coords]
 
-    # TODO check if hungry then go for food
-
     next_coord = None
-    # Wander safely
-    if possible_move_coords:
-        # PLACE HOLDER
+
+    # Super simple food retrieval
+    if health < min_health_level:
+        # Check if we're beside food
+        for coord in possible_move_coords:
+            if coord in food_coords:
+                # Get that food
+                next_coord = food_coords
+                break
+    else:
+        # Wander safely
+        # Placeholder
         import random
         next_coord = random.choice(possible_move_coords)
 
