@@ -97,7 +97,7 @@ def get_next_move(snake, empty_coords, food_coords, min_health_level):
         for coord in possible_move_coords:
             if coord in food_coords:
                 # Get that food
-                next_coord = food_coords
+                next_coord = coord
                 break
     else:
         # Wander safely
