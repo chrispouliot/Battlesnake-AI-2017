@@ -44,7 +44,7 @@ def get_dangerous_coords(width, height, flattened_snake_coords):
     return danger_coords
 
 
-def get_empty_coords(width, height, dangerous_coords):
+def get_safe_coords(width, height, dangerous_coords):
     """Returns a list of all empty coordinates in the game board"""
     # All possible board coordinates minus dangerous coords (ie walls and snakes)
     all_board_coordinates = get_all_board_coordinates(width, height)
@@ -92,7 +92,7 @@ def get_next_move(snake, empty_coords, food_coords):
     # TODO check if hungry then go for food
 
     next_coord = None
-    # For now just take the first one
+    # Wander safely
     if possible_move_coords:
         # PLACE HOLDER
         import random

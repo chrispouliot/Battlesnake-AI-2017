@@ -1,7 +1,7 @@
 import unittest
 
 from helpers import get_dangerous_coords, \
-    get_empty_coords, \
+    get_safe_coords, \
     get_flattened_list, \
     get_next_move, \
     get_snake_by_id
@@ -70,7 +70,7 @@ class TestHelperFuncs(unittest.TestCase):
         expected = [[1, 0], [1, 1]]
 
         # Act
-        empty_spaces = get_empty_coords(width, height, dangerous)
+        empty_spaces = get_safe_coords(width, height, dangerous)
 
         # Assert
         self.assertEqual(sorted(expected), sorted(empty_spaces))

@@ -3,7 +3,7 @@ import os
 from flask import Flask, json, request
 
 from helpers import get_dangerous_coords, \
-    get_empty_coords, \
+    get_safe_coords, \
     get_flattened_list, \
     get_next_move, \
     get_snake_by_id
@@ -47,7 +47,7 @@ def handle_move():
     flattened_snake_coords = get_flattened_list([snake['coords'] for snake in snakes])
     our_snake = get_snake_by_id(snakes, snake_id)
     dangerous_coords = get_dangerous_coords(width, height, flattened_snake_coords)
-    empty_coords = get_empty_coords(width, height, dangerous_coords)
+    empty_coords = get_safe_coords(width, height, dangerous_coords)
 
     # We're good
     return json.dumps({'move': get_next_move(our_snake, empty_coords, food_coords)})
