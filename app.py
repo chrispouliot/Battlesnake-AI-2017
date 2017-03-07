@@ -44,7 +44,7 @@ def handle_move():
     food_coords = request_dict['food']
     snakes = request_dict['snakes']
 
-    # Inferred board data
+    # Inferred board data!
     flattened_snake_coords = get_flattened_list([snake['coords'] for snake in snakes])
     our_snake = get_snake_by_id(snakes, snake_id)
     dangerous_coords = get_dangerous_coords(width, height, flattened_snake_coords, COORD_DANGER_LEVEL_MAX)
